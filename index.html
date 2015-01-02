@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>Orbital Planet Defender</title>
+	<link rel="stylesheet" href="../Canvasloth/canvasloth.css"/>
+	<script src="../Canvasloth/canvasloth.js"></script>
+	<script src="../Canvasloth/canvasloth-sprite.js"></script>
+	<!--<script src="../jquery.js"></script>-->
+	<style>
+	body {
+		background: #111;
+		}
+	.canvasloth {
+		width: 800px;
+		height: 600px;
+		margin: 30px auto;
+		}
+		canvas {
+			background: rgb(0,0,0);
+			}
+		.canvasloth-hud-below {
+			font: 11px/14px sans-serif;
+			}
+			.canvasloth-hud-below .console {
+				position: absolute;
+				overflow: hidden;
+				width: 200px;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				border-right: 1px dashed rgba(255,255,255,.5);
+				padding: .2em .3em;
+				color: rgba(200,200,200,.8);
+				background: rgba(0,0,0,.92);
+				}
+				.canvasloth-hud-below .console b {
+					color: rgba(200,200,200);
+					}
+		.canvasloth-hud-above {
+			}
+	</style>
+	<script>
+	function lg(s) { console.log(s); }
+
+	function main() {
+		new Canvasloth({
+			container: document.querySelector('.canvasloth'),
+			context: '2d',
+			// autoFocus: true,
+			fps: 5,
+			fps: 60,
+			thisApp: {
+				earthAngle: 0,
+				putImage: function(x, y) {
+					var	w = this.img.width,
+						h = this.img.height,
+						sc = .2 + Math.random() * .5;
+					this.ctx.save();
+						this.ctx.translate(x, y);
+							this.ctx.scale(sc, sc);
+								this.ctx.rotate(Math.random() * Math.PI);
+									this.ctx.globalAlpha = .9;
+									this.ctx.drawImage(this.img,
+										w / -2,
+										h / -2
+									);
+					this.ctx.restore();
+				},
+				render: function() {
+					var tm = this.cnv.frameTime();
+					this.ctx.save();
+						this.ctx.translate(this.w / 2, this.h / 2);
+							this.ctx.globalAlpha = .5;
+							this.sprite_space.draw(0, 0);
+							this.ctx.save();
+								this.ctx.rotate(this.earthAngle += 1 * tm);
+									this.ctx.globalAlpha = 1;
+									this.sprite_earth.draw(0, 0);
+							this.ctx.restore();
+							this.ctx.globalAlpha = .2;
+							this.sprite_earthShadow.draw(0, 0);
+					this.ctx.restore();
+				}
+			},
+			ready: function(cnv, ctx) {
+				this.cnv = cnv;
+				this.ctx = ctx;
+				this.w = ctx.canvas.width;
+				this.h = ctx.canvas.height;
+				this.isClicked = false;
+				this.img = cnv.image('5.png');
+				this.sprite_space =
+					new canvaslothSprite(ctx, cnv.image('space.jpg'))
+						.pivotX("center")
+						.pivotY("center")
+						.dstSizeNorm(.8, .8);
+				this.sprite_earth =
+					new canvaslothSprite(ctx, cnv.image('earth.png'))
+						.pivotX("center")
+						.pivotY("center")
+						.dstSizeNorm(.4, .4);
+				this.sprite_earthShadow =
+					new canvaslothSprite(ctx, cnv.image('earthShadow.png'))
+						.pivotX("center")
+						.pivotY("center")
+						.dstSizeNorm(.4, .4);
+			},
+			loop: function() {
+				this.ctx.clearRect(0, 0, this.w, this.h);
+				this.render();
+			},
+			events: {
+				mouseDown: function(x, y, btn) {
+					this.isClicked = true;
+					this.putImage(x, y);
+				},
+				mouseUp: function(x, y, btn) {
+					this.isClicked = false;
+				},
+				mouseMove: function(x, y) {
+					if (this.isClicked)
+						this.putImage(x, y);
+					x -= this.w / 2;
+					y -= this.h / 2;
+				}
+			}
+		});
+	}
+
+	// $(main);
+	window.onload = main;
+	</script>
+</head>
+<body>
+	<div class="canvasloth">
+		<div class="canvasloth-assets">
+			<img src="img/5.png"/>
+			<img src="img/space.jpg"/>
+			<img src="img/earth.png"/>
+			<img src="img/earthShadow.png"/>
+		</div>
+		<div class="canvasloth-hud-below">
+		</div>
+		<div class="canvasloth-hud-above">
+		</div>
+	</div>
+</body>
+</html>
