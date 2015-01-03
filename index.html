@@ -10,6 +10,7 @@
 	<script src="opd/opd.js"></script>
 	<script src="opd/space/space.js"></script>
 	<script src="opd/earth/earth.js"></script>
+	<script src="opd/ship/ship.js"></script>
 	<style>
 	body {
 		background: #111;
@@ -61,9 +62,9 @@
 				this.h = ctx.canvas.height;
 				this.space.init(cnv, ctx);
 				this.earth.init(cnv, ctx);
+				this.ship.init(cnv, ctx);
 			},
 			loop: function() {
-				this.ctx.clearRect(0, 0, this.w, this.h);
 				this.render();
 			},
 			events: {
@@ -89,6 +90,7 @@
 			<img src="opd/space/spSpace.jpg"/>
 			<img src="opd/earth/spEarth.png"/>
 			<img src="opd/earth/spShadow.png"/>
+			<img src="opd/ship/spShip.png"/>
 		</div>
 		<div class="canvasloth-hud-below">
 		</div>
