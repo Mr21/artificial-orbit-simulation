@@ -51,36 +51,44 @@
 			fps: 5,
 			fps: 60,
 			thisApp: {
-				earthAngle: 0,
-				putImage: function(x, y) {
-					var	w = this.img.width,
-						h = this.img.height,
-						sc = .2 + Math.random() * .5;
-					this.ctx.save();
-						this.ctx.translate(x, y);
-							this.ctx.scale(sc, sc);
-								this.ctx.rotate(Math.random() * Math.PI);
-									this.ctx.globalAlpha = .9;
-									this.ctx.drawImage(this.img,
-										w / -2,
-										h / -2
-									);
-					this.ctx.restore();
+				earth: {
+					radius: 100,
+					atmosphereSize: 10,
+					angle: 0,
+					init: function(cnv, ctx) {
+						this.spEarth = new canvaslothSprite(ctx, cnv.image('earth.png'))
+							.pivotX("center").pivotY("center")
+							.dstSize(this.radius * 2);
+						this.spShadow = new canvaslothSprite(ctx, cnv.image('earthShadow.png'))
+							.pivotX("center").pivotY("center")
+							.dstSize((this.radius + this.atmosphereSize) * 2)
+							.opacity(.3);
+					},
+					draw: function(ctx, ft) {
+						// earth
+						ctx.save();
+							ctx.rotate(this.angle += 1 * ft);
+								this.spEarth.draw(0, 0);
+						ctx.restore();
+						// atmosphere
+						ctx.lineWidth = this.atmosphereSize;
+						ctx.strokeStyle = "#fff";
+						ctx.globalAlpha = .2;
+						ctx.beginPath();
+							ctx.arc(0, 0, this.radius + this.atmosphereSize / 2, 0, Math.PI * 2, true);
+						ctx.stroke();
+						// shadow
+						this.spShadow.draw(0, 0);
+					}
 				},
 				render: function() {
-					var tm = this.cnv.frameTime();
-					this.ctx.save();
-						this.ctx.translate(this.w / 2, this.h / 2);
-							this.ctx.globalAlpha = .5;
+					var	ctx = this.ctx,
+						fTime = this.cnv.frameTime();
+					ctx.save();
+						ctx.translate(this.w / 2, this.h / 2);
 							this.sprite_space.draw(0, 0);
-							this.ctx.save();
-								this.ctx.rotate(this.earthAngle += 1 * tm);
-									this.ctx.globalAlpha = 1;
-									this.sprite_earth.draw(0, 0);
-							this.ctx.restore();
-							this.ctx.globalAlpha = .2;
-							this.sprite_earthShadow.draw(0, 0);
-					this.ctx.restore();
+							this.earth.draw(ctx, fTime);
+					ctx.restore();
 				}
 			},
 			ready: function(cnv, ctx) {
@@ -88,23 +96,11 @@
 				this.ctx = ctx;
 				this.w = ctx.canvas.width;
 				this.h = ctx.canvas.height;
-				this.isClicked = false;
-				this.img = cnv.image('5.png');
-				this.sprite_space =
-					new canvaslothSprite(ctx, cnv.image('space.jpg'))
-						.pivotX("center")
-						.pivotY("center")
-						.dstSizeNorm(.8, .8);
-				this.sprite_earth =
-					new canvaslothSprite(ctx, cnv.image('earth.png'))
-						.pivotX("center")
-						.pivotY("center")
-						.dstSizeNorm(.4, .4);
-				this.sprite_earthShadow =
-					new canvaslothSprite(ctx, cnv.image('earthShadow.png'))
-						.pivotX("center")
-						.pivotY("center")
-						.dstSizeNorm(.4, .4);
+				this.earth.init(cnv, ctx);
+				this.sprite_space = new canvaslothSprite(ctx, cnv.image('space.jpg'))
+					.pivotX("center").pivotY("center")
+					.dstSizeNorm(.8, .8)
+					.opacity(.7);
 			},
 			loop: function() {
 				this.ctx.clearRect(0, 0, this.w, this.h);
@@ -112,15 +108,10 @@
 			},
 			events: {
 				mouseDown: function(x, y, btn) {
-					this.isClicked = true;
-					this.putImage(x, y);
 				},
 				mouseUp: function(x, y, btn) {
-					this.isClicked = false;
 				},
 				mouseMove: function(x, y) {
-					if (this.isClicked)
-						this.putImage(x, y);
 					x -= this.w / 2;
 					y -= this.h / 2;
 				}
@@ -135,7 +126,6 @@
 <body>
 	<div class="canvasloth">
 		<div class="canvasloth-assets">
-			<img src="img/5.png"/>
 			<img src="img/space.jpg"/>
 			<img src="img/earth.png"/>
 			<img src="img/earthShadow.png"/>
