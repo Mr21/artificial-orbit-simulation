@@ -46,6 +46,13 @@
 	</style>
 	<script>
 	function lg(s) { console.log(s); }
+	if (!window.$)
+		$ = {
+			each: function(ar, fn) {
+				for (var i = 0; i < ar.length; ++i)
+					fn.call(ar[i], i);
+			}
+		};
 
 	function main() {
 		new Canvasloth({
