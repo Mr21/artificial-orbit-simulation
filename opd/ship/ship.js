@@ -13,10 +13,10 @@ opd.ship = {
 	},
 	draw: function(ctx, cnv, ft) {
 		// update
-		if      (cnv.key(37)) this.x -= 2;
-		else if (cnv.key(39)) this.x += 2;
-		if      (cnv.key(38)) this.y -= 2;
-		else if (cnv.key(40)) this.y += 2;
+		if      (cnv.key(37)) this.x -= 100 * ft;
+		else if (cnv.key(39)) this.x += 100 * ft;
+		if      (cnv.key(38)) this.y -= 100 * ft;
+		else if (cnv.key(40)) this.y += 100 * ft;
 
 		var	tail = this.ar_posTail;
 
@@ -33,12 +33,18 @@ opd.ship = {
 
 		// render
 		if (tail.length > 2) {
-			ctx.lineWidth = 2;
-			ctx.globalAlpha = .08;
-			ctx.strokeStyle = "#fff";
 			var dotSize = 3.0;
-			var holeSize = dotSize + 2.0;
+			var holeSize = dotSize + 5.0;
+			ctx.lineWidth = 4;
+			ctx.lineCap =
+			ctx.lineJoin = "round";
+			ctx.strokeStyle = "#fff";
 			for (var i = this.tailDotId % holeSize; i < this.ar_posTail.length - holeSize; i += holeSize) {
+				ctx.globalAlpha = i < this.ar_posTail.length - 3 * holeSize
+					? .15
+					: i < this.ar_posTail.length - 2 * holeSize
+						? .05
+						: .025;
 				ctx.beginPath();
 					for (var j = 0; j <= dotSize; ++j)
 						ctx.lineTo(this.ar_posTail[i + j][0], this.ar_posTail[i + j][1]);
