@@ -2,67 +2,86 @@ opd.ship = {
 	init: function(cnv, ctx) {
 		this.x = 50;
 		this.y = -150;
-		this.tailRecording = true;
-		this.tailDelay = 0;
-		this.tailDotId = 0;
-		this.tailSize = 50;
-		this.ar_posTail = [];
+		this.dx = 50;
+		this.dy = 0;
 		this.spShip = new canvaslothSprite(ctx, cnv.image('spShip.png'))
 			.pivotX("center").pivotY("center")
 			.dstSize(25, 25);
 	},
+	tail: (function() {
+		var	pos = [];
+			recording = true,
+			delay = 0,
+			size = 50,
+			dotId = 0,
+			dotSize = 3.0,
+			holeSize = dotSize + 5.0;
+		return function(ctx, cnv, ft) {
+			delay += ft;
+			if (delay > .025) {
+				delay = 0;
+				if (recording) {
+					pos.unshift([this.x, this.y]);
+					++dotId;
+				}
+				if (pos.length > size || !recording)
+					pos.pop();
+			}
+
+			if (pos.length > 2) {
+				ctx.lineCap =
+				ctx.lineJoin = "round";
+				ctx.lineWidth = 4;
+				ctx.strokeStyle = "#fff";
+				for (var i = dotId % holeSize; i < pos.length - holeSize; i += holeSize) {
+					ctx.globalAlpha = i < pos.length - 3 * holeSize
+						? .15
+						: i < pos.length - 2 * holeSize
+							? .05
+							: .025;
+					ctx.beginPath();
+						for (var j = 0; j <= dotSize; ++j)
+							ctx.lineTo(pos[i + j][0], pos[i + j][1]);
+						ctx.stroke();
+					ctx.closePath();
+				}
+			}
+		};
+	})(),
 	draw: function(ctx, cnv, ft) {
 		// update
+		var	angle = Math.atan2(
+				 this.x,
+				-this.y
+			),
+			vx = Math.sin(angle),
+			vy = Math.cos(angle);
+
+		this.x += this.dx * ft;
+		this.y += this.dy * ft;
+
 		if      (cnv.key(37)) this.x -= 100 * ft;
 		else if (cnv.key(39)) this.x += 100 * ft;
 		if      (cnv.key(38)) this.y -= 100 * ft;
 		else if (cnv.key(40)) this.y += 100 * ft;
 
-		var	tail = this.ar_posTail;
-
-		this.tailDelay += ft;
-		if (this.tailDelay > .025) {
-			this.tailDelay = 0;
-			if (this.tailRecording) {
-				tail.unshift([this.x, this.y]);
-				++this.tailDotId;
-			}
-			if (tail.length > this.tailSize || !this.tailRecording)
-				tail.pop();
-		}
-
 		// render
-		if (tail.length > 2) {
-			var dotSize = 3.0;
-			var holeSize = dotSize + 5.0;
-			ctx.lineWidth = 4;
-			ctx.lineCap =
-			ctx.lineJoin = "round";
-			ctx.strokeStyle = "#fff";
-			for (var i = this.tailDotId % holeSize; i < this.ar_posTail.length - holeSize; i += holeSize) {
-				ctx.globalAlpha = i < this.ar_posTail.length - 3 * holeSize
-					? .15
-					: i < this.ar_posTail.length - 2 * holeSize
-						? .05
-						: .025;
-				ctx.beginPath();
-					for (var j = 0; j <= dotSize; ++j)
-						ctx.lineTo(this.ar_posTail[i + j][0], this.ar_posTail[i + j][1]);
-					ctx.stroke();
-				ctx.closePath();
-			}
-		}
+		this.tail(ctx, cnv, ft);
 
-		var	vx = Math.sin(angle),
-			vy = Math.cos(angle),
-			angle = Math.atan2(
-				 this.x,
-				-this.y
-			);
 		ctx.save();
 			ctx.translate(this.x, this.y);
-				ctx.rotate(angle);
-					this.spShip.draw(0, 0);
+				ctx.save();
+					ctx.rotate(angle);
+						this.spShip.draw(0, 0);
+				ctx.restore();
+				ctx.beginPath();
+					ctx.lineWidth = 3;
+					ctx.strokeStyle = "#fff";
+					ctx.globalAlpha = 1;
+					ctx.moveTo(0, 0);
+					ctx.lineTo(this.dx, this.dy);
+					ctx.stroke();
+				ctx.closePath();
 		ctx.restore();
 	}
 };
