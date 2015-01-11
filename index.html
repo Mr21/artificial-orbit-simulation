@@ -61,7 +61,7 @@
 		new Canvasloth({
 			container: document.querySelector('.canvasloth'),
 			context: '2d',
-			// autoFocus: true,
+			autoFocus: true,
 			fps: 5,
 			fps: 60,
 			thisApp: opd,
@@ -76,16 +76,6 @@
 			},
 			loop: function() {
 				this.render();
-			},
-			events: {
-				mouseDown: function(x, y, btn) {
-				},
-				mouseUp: function(x, y, btn) {
-				},
-				mouseMove: function(x, y) {
-					x -= this.w / 2;
-					y -= this.h / 2;
-				}
 			}
 		});
 	}
