@@ -51,8 +51,11 @@ opd.ship = {
 		}
 	},
 	draw: function(ctx, cnv, ft) {
-		// update
-		var	angle = Math.atan2(
+		var
+			kSpace = cnv.key(32),
+			kLeft  = cnv.key(37),
+			kRight = cnv.key(39),
+			angle = Math.atan2(
 				 this.x,
 				-this.y
 			),
@@ -64,16 +67,16 @@ opd.ship = {
 			earthRad2 = $.sqr(opd.earth.radius);
 
 		// controls
-		if (cnv.key(32)) {
-			this.dx += 200 * vx * ft;
-			this.dy -= 200 * vy * ft;
+		if (kSpace) {
+			this.dx += 2 * vx;
+			this.dy -= 2 * vy;
 		}
-		if (cnv.key(37)) {
-			this.dx += 100 * vx90 * ft;
-			this.dy += 100 * vy90 * ft;
-		} else if (cnv.key(39)) {
-			this.dx -= 100 * vx90 * ft;
-			this.dy -= 100 * vy90 * ft;
+		if (kLeft) {
+			this.dx += vx90;
+			this.dy += vy90;
+		} else if (kRight) {
+			this.dx -= vx90;
+			this.dy -= vy90;
 		}
 
 		// earth collision
@@ -88,8 +91,6 @@ opd.ship = {
 				this.angleEarth = opd.earth.angle;
 				this.dx =
 				this.dy = 0;
-				this.x = (opd.earth.radius + this.size / 2 - .01) *  vx;
-				this.y = (opd.earth.radius + this.size / 2 - .01) * -vy;
 			} else {
 				this.dx = 100 * -vx90;
 				this.dy = 100 * -vy90;
@@ -111,7 +112,6 @@ opd.ship = {
 
 		// render
 		this.tail.draw(ctx, cnv, ft);
-
 		ctx.save();
 			ctx.translate(this.x, this.y);
 				ctx.save();
