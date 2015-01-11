@@ -1,16 +1,18 @@
 opd.ship = {
 	init: function(cnv, ctx) {
-		this.x = 300;
-		this.y = -200;
+		this.x = 150;
+		this.y = -100;
 		this.dx = 0;
 		this.dy = 0;
+		this.size = 25;
+		this.landed = false;
+		this.angleEarth = 0;
 		this.spShip = new canvaslothSprite(ctx, cnv.image('spShip.png'))
 			.pivotX("center").pivotY("center")
-			.dstSize(25, 25);
+			.dstSize(this.size);
 		this.tail.ship = this;
 	},
 	tail: {
-		recording: true,
 		pos: [],
 		delay: 0,
 		size: 50,
@@ -21,11 +23,11 @@ opd.ship = {
 			this.delay += ft;
 			if (this.delay > .025) {
 				this.delay = 0;
-				if (this.recording) {
+				if (!this.ship.landed) {
 					this.pos.unshift([this.ship.x, this.ship.y]);
 					++this.dotId;
 				}
-				if (this.pos.length > this.size || !this.recording)
+				if (this.pos.length > this.size || this.ship.landed)
 					this.pos.pop();
 			}
 			if (this.pos.length > 2) {
@@ -59,11 +61,9 @@ opd.ship = {
 			vx90 = Math.sin(angle - Math.PI / 2),
 			vy90 = Math.cos(angle + Math.PI / 2),
 			dist = this.x * this.x + this.y * this.y,
-			earthRad2 = Math.pow(opd.earth.radius, 2);
+			earthRad2 = $.sqr(opd.earth.radius);
 
-		// direction
-		this.dx -= earthRad2 / dist * 5 * vx;
-		this.dy += earthRad2 / dist * 5 * vy;
+		// controls
 		if (cnv.key(32)) {
 			this.dx += 200 * vx * ft;
 			this.dy -= 200 * vy * ft;
@@ -75,9 +75,39 @@ opd.ship = {
 			this.dx -= 100 * vx90 * ft;
 			this.dy -= 100 * vy90 * ft;
 		}
-		// position
-		this.x += this.dx * ft;
-		this.y += this.dy * ft;
+
+		// earth collision
+		var landedBefore = this.landed;
+		this.landed =
+			$.sqr(opd.earth.radius + this.size / 2) >
+			$.sqr(this.x + this.dx * ft) +
+			$.sqr(this.y + this.dy * ft);
+
+		if (landedBefore !== this.landed) {
+			if (this.landed) {
+				this.angleEarth = opd.earth.angle;
+				this.dx =
+				this.dy = 0;
+				this.x = (opd.earth.radius + this.size / 2 - .01) *  vx;
+				this.y = (opd.earth.radius + this.size / 2 - .01) * -vy;
+			} else {
+				this.dx = 100 * -vx90;
+				this.dy = 100 * -vy90;
+			}
+		}
+
+		if (!this.landed) {
+			this.dx -= earthRad2 / dist * 2 * vx;
+			this.dy += earthRad2 / dist * 2 * vy;
+			this.x += this.dx * ft;
+			this.y += this.dy * ft;
+		} else {
+			vx = Math.sin(angle + (opd.earth.angle - this.angleEarth));
+			vy = Math.cos(angle + (opd.earth.angle - this.angleEarth));
+			this.x = (opd.earth.radius + this.size / 2 - .01) *  vx;
+			this.y = (opd.earth.radius + this.size / 2 - .01) * -vy;
+			this.angleEarth = opd.earth.angle;
+		}
 
 		// render
 		this.tail.draw(ctx, cnv, ft);
