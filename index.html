@@ -73,6 +73,22 @@
 			},
 			loop: function() {
 				this.render();
+			},
+			events: {
+				keydown: function(k) {
+					switch (k) {
+						case 32: this.ship.reactorBottomOn(); break;
+						case 37: this.ship.reactorRightOn(); break;
+						case 39: this.ship.reactorLeftOn(); break;
+					}
+				},
+				keyup: function(k) {
+					switch (k) {
+						case 32: this.ship.reactorBottomOff(); break;
+						case 37: this.ship.reactorRightOff(); break;
+						case 39: this.ship.reactorLeftOff(); break;
+					}
+				}
 			}
 		});
 	}

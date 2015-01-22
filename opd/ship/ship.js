@@ -25,6 +25,12 @@ opd.ship = {
 				.nbFrames(9)
 				.duration(.5);
 	},
+	reactorBottomOn:  function() { this.anReactors[2].play(); },
+	reactorLeftOn:    function() { this.anReactors[3].play(); },
+	reactorRightOn:   function() { this.anReactors[1].play(); },
+	reactorBottomOff: function() { this.anReactors[2].stop(); },
+	reactorLeftOff:   function() { this.anReactors[3].stop(); },
+	reactorRightOff:  function() { this.anReactors[1].stop(); },
 	tail: {
 		pos: [],
 		delay: 0,
@@ -85,7 +91,8 @@ opd.ship = {
 		if (kLeft) {
 			this.dx += vx90;
 			this.dy += vy90;
-		} else if (kRight) {
+		}
+		if (kRight) {
 			this.dx -= vx90;
 			this.dy -= vy90;
 		}
