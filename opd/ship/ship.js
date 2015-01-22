@@ -1,16 +1,29 @@
 opd.ship = {
 	init: function(cnv, ctx) {
-		this.x = 150;
-		this.y = -100;
+		this.x = 15;
+		this.y = -10;
 		this.dx = 0;
 		this.dy = 0;
 		this.size = 25;
 		this.landed = false;
 		this.angleEarth = 0;
+		this.tail.ship = this;
+
 		this.spShip = new canvaslothSprite(ctx, cnv.image('spShip.png'))
 			.pivotX("center").pivotY("center")
 			.dstSize(this.size);
-		this.tail.ship = this;
+
+		this.anReactors = [];
+		for (var i = 0; i < 4; ++i)
+			this.anReactors[i] = new canvaslothAnim(
+					new canvaslothSprite(ctx, cnv.image('anReactor.png'))
+						.srcSize(8, 24)
+						.pivotX("center").pivotY("bottom")
+				)
+				.looping(true)
+				.loopAt(5)
+				.nbFrames(9)
+				.duration(.5);
 	},
 	tail: {
 		pos: [],
@@ -23,11 +36,9 @@ opd.ship = {
 			this.delay += ft;
 			if (this.delay > .025) {
 				this.delay = 0;
-				if (!this.ship.landed) {
-					this.pos.unshift([this.ship.x, this.ship.y]);
-					++this.dotId;
-				}
-				if (this.pos.length > this.size || this.ship.landed)
+				this.pos.unshift([this.ship.x, this.ship.y]);
+				++this.dotId;
+				if (this.pos.length > this.size)
 					this.pos.pop();
 			}
 			if (this.pos.length > 2) {
@@ -116,18 +127,24 @@ opd.ship = {
 			ctx.translate(this.x, this.y);
 				ctx.save();
 					ctx.rotate(angle);
+						ctx.save();
+							this.anReactors[0].draw(0, -6, ft); ctx.rotate(Math.PI / 2);
+							this.anReactors[1].draw(0, -6, ft); ctx.rotate(Math.PI / 2);
+							this.anReactors[2].draw(0, -6, ft); ctx.rotate(Math.PI / 2);
+							this.anReactors[3].draw(0, -6, ft);
+						ctx.restore();
 						this.spShip.draw(0, 0);
 				ctx.restore();
 				// debug
-				ctx.beginPath();
-					ctx.lineWidth = 2;
-					ctx.strokeStyle = "rgba(255,255,255,.3)";
-					ctx.globalAlpha = 1;
-					ctx.moveTo(0, 0); ctx.lineTo(this.dx, this.dy);
-					ctx.moveTo(0, 0); ctx.lineTo(vx90 * +50, vy90 * +50);
-					ctx.moveTo(0, 0); ctx.lineTo(vx90 * -50, vy90 * -50);
-					// ctx.stroke();
-				ctx.closePath();
+				// ctx.beginPath();
+				// 	ctx.lineWidth = 2;
+				// 	ctx.strokeStyle = "rgba(255,255,255,.3)";
+				// 	ctx.globalAlpha = 1;
+				// 	ctx.moveTo(0, 0); ctx.lineTo(this.dx, this.dy);
+				// 	ctx.moveTo(0, 0); ctx.lineTo(vx90 * +50, vy90 * +50);
+				// 	ctx.moveTo(0, 0); ctx.lineTo(vx90 * -50, vy90 * -50);
+				// 	ctx.stroke();
+				// ctx.closePath();
 		ctx.restore();
 	}
 };

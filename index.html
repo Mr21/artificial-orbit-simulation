@@ -3,9 +3,10 @@
 <head>
 	<meta charset="UTF-8"/>
 	<title>Orbital Planet Defender</title>
-	<link rel="stylesheet" href="../Canvasloth/canvasloth.css"/>
-	<script src="../Canvasloth/canvasloth.js"></script>
-	<script src="../Canvasloth/canvasloth-sprite.js"></script>
+	<link rel="stylesheet" href="../Canvasloth/src/canvasloth.css"/>
+	<script src="../Canvasloth/src/canvasloth.js"></script>
+	<script src="../Canvasloth/src/addons/canvasloth-sprite.js"></script>
+	<script src="../Canvasloth/src/addons/canvasloth-anim.js"></script>
 	<!--<script src="../jquery.js"></script>-->
 	<script src="opd/opd.js"></script>
 	<script src="opd/space/space.js"></script>
@@ -20,9 +21,6 @@
 		height: 600px;
 		margin: 30px auto;
 		}
-		canvas {
-			background: rgb(0,0,0);
-			}
 		.canvasloth-hud-below {
 			font: 11px/14px sans-serif;
 			}
@@ -62,7 +60,6 @@
 			container: document.querySelector('.canvasloth'),
 			context: '2d',
 			autoFocus: true,
-			fps: 5,
 			fps: 60,
 			thisApp: opd,
 			ready: function(cnv, ctx) {
@@ -91,6 +88,7 @@
 			<img src="opd/earth/spEarth.png"/>
 			<img src="opd/earth/spShadow.png"/>
 			<img src="opd/ship/spShip.png"/>
+			<img src="opd/ship/anReactor.png"/>
 		</div>
 		<div class="canvasloth-hud-below">
 		</div>
