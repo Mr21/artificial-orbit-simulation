@@ -14,23 +14,29 @@ opd.ship = {
 			.dstSize(this.size);
 
 		this.anReactors = [];
-		for (var i = 0; i < 4; ++i)
-			this.anReactors[i] = new canvaslothAnim(
-					new canvaslothSprite(ctx, cnv.image('anReactor.png'))
-						.srcSize(8, 24)
-						.pivotX("center").pivotY("bottom")
-				)
-				.looping(true)
-				.loopAt(5)
-				.nbFrames(9)
-				.duration(.5);
+		for (var i = 0; i < 4; ++i) {
+			this.anReactors[i] = {
+				active: false,
+				anim: new canvaslothAnim(
+						new canvaslothSprite(ctx, cnv.image('anReactor.png'))
+							.srcSize(8, 18)
+							.pivotX("center").pivotY("bottom")
+					)
+					.looping(true)
+					.loopAt(3)
+					.nbFrames(7)
+					.duration(.5)
+			};
+		}
 	},
-	reactorBottomOn:  function() { this.anReactors[2].play(); },
-	reactorLeftOn:    function() { this.anReactors[3].play(); },
-	reactorRightOn:   function() { this.anReactors[1].play(); },
-	reactorBottomOff: function() { this.anReactors[2].stop(); },
-	reactorLeftOff:   function() { this.anReactors[3].stop(); },
-	reactorRightOff:  function() { this.anReactors[1].stop(); },
+	reactorTopOn:     function() { var r = this.anReactors[0]; r.anim.play(); r.active = true; },
+	reactorRightOn:   function() { var r = this.anReactors[1]; r.anim.play(); r.active = true; },
+	reactorBottomOn:  function() { var r = this.anReactors[2]; r.anim.play(); r.active = true; },
+	reactorLeftOn:    function() { var r = this.anReactors[3]; r.anim.play(); r.active = true; },
+	reactorTopOff:    function() { var r = this.anReactors[0]; r.anim.stop(); r.active = false; },
+	reactorRightOff:  function() { var r = this.anReactors[1]; r.anim.stop(); r.active = false; },
+	reactorBottomOff: function() { var r = this.anReactors[2]; r.anim.stop(); r.active = false; },
+	reactorLeftOff:   function() { var r = this.anReactors[3]; r.anim.stop(); r.active = false; },
 	tail: {
 		pos: [],
 		delay: 0,
@@ -84,15 +90,19 @@ opd.ship = {
 			earthRad2 = $.sqr(opd.earth.radius);
 
 		// controls
-		if (kSpace) {
+		if (this.anReactors[0].active) {
+			this.dx -= 2 * vx;
+			this.dy += 2 * vy;
+		}
+		if (this.anReactors[2].active) {
 			this.dx += 2 * vx;
 			this.dy -= 2 * vy;
 		}
-		if (kLeft) {
+		if (this.anReactors[1].active) {
 			this.dx += vx90;
 			this.dy += vy90;
 		}
-		if (kRight) {
+		if (this.anReactors[3].active) {
 			this.dx -= vx90;
 			this.dy -= vy90;
 		}
@@ -115,6 +125,7 @@ opd.ship = {
 			}
 		}
 
+		// gravity
 		if (!this.landed) {
 			this.dx -= earthRad2 / dist * 2 * vx;
 			this.dy += earthRad2 / dist * 2 * vy;
@@ -134,11 +145,12 @@ opd.ship = {
 			ctx.translate(this.x, this.y);
 				ctx.save();
 					ctx.rotate(angle);
+						// ctx.scale(1.2, 1.2);
 						ctx.save();
-							this.anReactors[0].draw(0, -6, ft); ctx.rotate(Math.PI / 2);
-							this.anReactors[1].draw(0, -6, ft); ctx.rotate(Math.PI / 2);
-							this.anReactors[2].draw(0, -6, ft); ctx.rotate(Math.PI / 2);
-							this.anReactors[3].draw(0, -6, ft);
+							this.anReactors[0].anim.draw(0, -8, ft); ctx.rotate(Math.PI / 2);
+							this.anReactors[1].anim.draw(0, -8, ft); ctx.rotate(Math.PI / 2);
+							this.anReactors[2].anim.draw(0, -8, ft); ctx.rotate(Math.PI / 2);
+							this.anReactors[3].anim.draw(0, -8, ft);
 						ctx.restore();
 						this.spShip.draw(0, 0);
 				ctx.restore();

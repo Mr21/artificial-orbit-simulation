@@ -77,15 +77,17 @@
 			events: {
 				keydown: function(k) {
 					switch (k) {
-						case 32: this.ship.reactorBottomOn(); break;
+						case 40: this.ship.reactorTopOn(); break;
 						case 37: this.ship.reactorRightOn(); break;
+						case 38: this.ship.reactorBottomOn(); break;
 						case 39: this.ship.reactorLeftOn(); break;
 					}
 				},
 				keyup: function(k) {
 					switch (k) {
-						case 32: this.ship.reactorBottomOff(); break;
+						case 40: this.ship.reactorTopOff(); break;
 						case 37: this.ship.reactorRightOff(); break;
+						case 38: this.ship.reactorBottomOff(); break;
 						case 39: this.ship.reactorLeftOff(); break;
 					}
 				}
