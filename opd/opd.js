@@ -2,7 +2,7 @@ opd = {
 	render: function() {
 		var	ctx = this.ctx,
 			cnv = this.cnv,
-			fTime = cnv.frameTime();
+			fTime = 1 / 60;
 		ctx.clearRect(0, 0, this.w, this.h);
 
 		ctx.save();
