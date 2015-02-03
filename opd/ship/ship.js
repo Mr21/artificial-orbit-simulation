@@ -4,6 +4,7 @@ opd.ship = {
 		this.y = -10;
 		this.dx = 0;
 		this.dy = 0;
+		this.angle = 0;
 		this.size = 25;
 		this.landed = false;
 		this.angleEarth = 0;
@@ -44,6 +45,7 @@ opd.ship = {
 		dotId: 0,
 		dotSize: 3,
 		holeSize: 3 + 5,
+		offset: 0,
 		draw: function(ctx, cnv, ft) {
 			this.delay += ft;
 			if (this.delay > .025) {
@@ -53,6 +55,7 @@ opd.ship = {
 				if (this.pos.length > this.size)
 					this.pos.pop();
 			}
+
 			if (this.pos.length > 2) {
 				ctx.lineCap =
 				ctx.lineJoin = "round";
@@ -74,18 +77,19 @@ opd.ship = {
 		}
 	},
 	draw: function(ctx, cnv, ft) {
+		this.angle = Math.atan2(
+			 this.x,
+			-this.y
+		);
+
 		var
 			kSpace = cnv.key(32),
 			kLeft  = cnv.key(37),
 			kRight = cnv.key(39),
-			angle = Math.atan2(
-				 this.x,
-				-this.y
-			),
-			vx = Math.sin(angle),
-			vy = Math.cos(angle),
-			vx90 = Math.sin(angle - Math.PI / 2),
-			vy90 = Math.cos(angle + Math.PI / 2),
+			vx = Math.sin(this.angle),
+			vy = Math.cos(this.angle),
+			vx90 = Math.sin(this.angle - Math.PI / 2),
+			vy90 = Math.cos(this.angle + Math.PI / 2),
 			dist = this.x * this.x + this.y * this.y,
 			earthRad2 = $.sqr(opd.earth.radius);
 
@@ -120,8 +124,8 @@ opd.ship = {
 				this.dx =
 				this.dy = 0;
 			} else {
-				this.dx = 100 * -vx90;
-				this.dy = 100 * -vy90;
+				this.dx += opd.earth.rotationSpeed * 100 * -vx90;
+				this.dy += opd.earth.rotationSpeed * 100 * -vy90;
 			}
 		}
 
@@ -132,8 +136,8 @@ opd.ship = {
 			this.x += this.dx * ft;
 			this.y += this.dy * ft;
 		} else {
-			vx = Math.sin(angle + (opd.earth.angle - this.angleEarth));
-			vy = Math.cos(angle + (opd.earth.angle - this.angleEarth));
+			vx = Math.sin(this.angle + (opd.earth.angle - this.angleEarth));
+			vy = Math.cos(this.angle + (opd.earth.angle - this.angleEarth));
 			this.x = (opd.earth.radius + this.size / 2 - .01) *  vx;
 			this.y = (opd.earth.radius + this.size / 2 - .01) * -vy;
 			this.angleEarth = opd.earth.angle;
@@ -144,8 +148,7 @@ opd.ship = {
 		ctx.save();
 			ctx.translate(this.x, this.y);
 				ctx.save();
-					ctx.rotate(angle);
-						// ctx.scale(1.2, 1.2);
+					ctx.rotate(this.angle);
 						ctx.save();
 							this.anReactors[0].anim.draw(0, -8, ft); ctx.rotate(Math.PI / 2);
 							this.anReactors[1].anim.draw(0, -8, ft); ctx.rotate(Math.PI / 2);

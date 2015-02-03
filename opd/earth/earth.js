@@ -1,6 +1,7 @@
 opd.earth = {
 	radius: 100,
 	gravity: 1,
+	rotationSpeed: .33,
 	atmosphereSize: .1,
 	angle: 0,
 	init: function(cnv, ctx) {
@@ -13,7 +14,7 @@ opd.earth = {
 			.opacity(.35);
 	},
 	draw: function(ctx, ft) {
-		this.angle += 1 * ft;
+		this.angle += this.rotationSpeed * ft;
 		// earth
 		ctx.save();
 			ctx.rotate(this.angle);
