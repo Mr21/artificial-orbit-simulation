@@ -3,101 +3,20 @@
 <head>
 	<meta charset="UTF-8"/>
 	<title>Orbital Planet Defender</title>
-	<link rel="stylesheet" href="../Canvasloth/src/canvasloth.css"/>
-	<script src="../Canvasloth/src/canvasloth.js"></script>
-	<script src="../Canvasloth/src/addons/canvasloth-sprite.js"></script>
-	<script src="../Canvasloth/src/addons/canvasloth-anim.js"></script>
-	<!--<script src="../jquery.js"></script>-->
+	<link rel="stylesheet" href="https://mr21.github.io/css-reset/css-reset.css"/>
+	<link rel="stylesheet" href="https://mr21.github.io/canvasloth/src/canvasloth.css"/>
+	<link rel="stylesheet" href="../mr21.fr/fa/css/font-awesome.css"/>
+	<link rel="stylesheet" href="opd/opd.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://mr21.github.io/canvasloth/src/canvasloth.js"></script>
+	<script src="https://mr21.github.io/canvasloth/src/addons/canvasloth-sprite.js"></script>
+	<script src="https://mr21.github.io/canvasloth/src/addons/canvasloth-anim.js"></script>
 	<script src="opd/opd.js"></script>
 	<script src="opd/space/space.js"></script>
 	<script src="opd/earth/earth.js"></script>
 	<script src="opd/ship/ship.js"></script>
-	<style>
-	body {
-		background: #111;
-		}
-	.canvasloth {
-		width: 800px;
-		height: 600px;
-		margin: 30px auto;
-		}
-		.canvasloth-hud-below {
-			font: 11px/14px sans-serif;
-			}
-			.canvasloth-hud-below .console {
-				position: absolute;
-				overflow: hidden;
-				width: 200px;
-				left: 0;
-				top: 0;
-				bottom: 0;
-				border-right: 1px dashed rgba(255,255,255,.5);
-				padding: .2em .3em;
-				color: rgba(200,200,200,.8);
-				background: rgba(0,0,0,.92);
-				}
-				.canvasloth-hud-below .console b {
-					color: rgba(200,200,200);
-					}
-		.canvasloth-hud-above {
-			}
-	</style>
-	<script>
-	function lg(s) { console.log(s); }
-	if (!window.$)
-		$ = {
-			sqr: function(n) {
-				return n * n;
-			},
-			each: function(ar, fn) {
-				for (var i = 0; i < ar.length; ++i)
-					fn.call(ar[i], i);
-			}
-		};
-
-	function main() {
-		new Canvasloth({
-			container: document.querySelector('.canvasloth'),
-			context: '2d',
-			autoFocus: true,
-			fps: 60,
-			thisApp: opd,
-			ready: function(cnv, ctx) {
-				this.cnv = cnv;
-				this.ctx = ctx;
-				this.w = ctx.canvas.width;
-				this.h = ctx.canvas.height;
-				this.space.init(cnv, ctx);
-				this.earth.init(cnv, ctx);
-				this.ship.init(cnv, ctx);
-			},
-			loop: function() {
-				this.render();
-			},
-			events: {
-				keydown: function(k) {
-					switch (k) {
-						case 40: this.ship.reactorTopOn(); break;
-						case 37: this.ship.reactorRightOn(); break;
-						case 38: this.ship.reactorBottomOn(); break;
-						case 39: this.ship.reactorLeftOn(); break;
-					}
-				},
-				keyup: function(k) {
-					switch (k) {
-						case 40: this.ship.reactorTopOff(); break;
-						case 37: this.ship.reactorRightOff(); break;
-						case 38: this.ship.reactorBottomOff(); break;
-						case 39: this.ship.reactorLeftOff(); break;
-					}
-				}
-			}
-		});
-	}
-
-	// $(main);
-	window.onload = main;
-	</script>
+	<script src="main.js"></script>
+	<script src="https://mr21.github.io/css-reset/css-reset.js"></script>
 </head>
 <body>
 	<div class="canvasloth">
@@ -111,6 +30,10 @@
 		<div class="canvasloth-hud-below">
 		</div>
 		<div class="canvasloth-hud-above">
+			<span class="css-btngrp referencial">
+				<a href="#" data="ship"><i class="fa fa-rocket"></i></a>
+				<a href="#" data="earth"><i class="fa fa-globe"></i></a>
+			</span>
 		</div>
 	</div>
 </body>

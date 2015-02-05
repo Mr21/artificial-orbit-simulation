@@ -91,7 +91,7 @@ opd.ship = {
 			vx90 = Math.sin(this.angle - Math.PI / 2),
 			vy90 = Math.cos(this.angle + Math.PI / 2),
 			dist = this.x * this.x + this.y * this.y,
-			earthRad2 = $.sqr(opd.earth.radius);
+			earthRad2 = Math.pow(opd.earth.radius, 2);
 
 		// controls
 		if (this.anReactors[0].active) {
@@ -114,9 +114,9 @@ opd.ship = {
 		// earth collision
 		var landedBefore = this.landed;
 		this.landed =
-			$.sqr(opd.earth.radius + this.size / 2) >
-			$.sqr(this.x + this.dx * ft) +
-			$.sqr(this.y + this.dy * ft);
+			Math.pow(opd.earth.radius + this.size / 2, 2) >
+			Math.pow(this.x + this.dx * ft, 2) +
+			Math.pow(this.y + this.dy * ft, 2);
 
 		if (landedBefore !== this.landed) {
 			if (this.landed) {
