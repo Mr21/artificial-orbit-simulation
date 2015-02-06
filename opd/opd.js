@@ -16,7 +16,7 @@ opd = {
 		this.refAngle = 0;
 		var jq_refA = $(".referencial a", cnv.container);
 
-		cnv.container.querySelector(".referencial")
+		cnv.container.querySelector(".referencial .css-btngrp")
 			.cssBtngrpCallback = function() {
 				that.objReferenced = this.attr("data");
 			};
@@ -40,12 +40,16 @@ opd = {
 							this.refY += (this.ship.y - this.refY) * fTime * 5;
 						break;
 						case "earth":
+							angleDiff = this.earth.angle - this.refAngle;
+							this.refX += (0 - this.refX) * fTime * 5;
+							this.refY += (0 - this.refY) * fTime * 5;
+						break;
+						case "universe":
 							angleDiff = 0 - this.refAngle;
-							this.refX += (-this.refX) * fTime * 5;
-							this.refY += (-this.refY) * fTime * 5;
+							this.refX += (0 - this.refX) * fTime * 5;
+							this.refY += (0 - this.refY) * fTime * 5;
 						break;
 					}
-
 					     if (angleDiff >  Math.PI) angleDiff -= Math.PI * 2;
 					else if (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
 					this.refAngle += angleDiff * .05;

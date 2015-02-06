@@ -15,6 +15,8 @@ opd.earth = {
 	},
 	draw: function(ctx, ft) {
 		this.angle += this.rotationSpeed * ft;
+		     if (this.angle >  Math.PI) this.angle -= Math.PI * 2;
+		else if (this.angle < -Math.PI) this.angle += Math.PI * 2;
 		// earth
 		ctx.save();
 			ctx.rotate(this.angle);
