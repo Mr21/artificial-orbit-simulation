@@ -5,9 +5,10 @@ body {
 	width: 800px;
 	height: 600px;
 	margin: 30px auto;
+	font: 12px sans-serif;
+	color: #fff;
 	}
 	.canvasloth-hud-below {
-		font: 11px/14px sans-serif;
 		}
 		.canvasloth-hud-below .console {
 			position: absolute;
@@ -29,6 +30,10 @@ body {
 		right: 10px;
 		bottom: 10px;
 		}
+		.canvasloth-hud-above .referencial div {
+			opacity: .5;
+			margin-bottom: .5em;
+			}
 		.canvasloth-hud-above .referencial .fa {
 			font-size: 24px;
 			}

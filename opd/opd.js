@@ -16,7 +16,7 @@ opd = {
 		this.refAngle = 0;
 		var jq_refA = $(".referencial a", cnv.container);
 
-		cnv.container.querySelector(".referencial")
+		cnv.container.querySelector(".referencial .css-btngrp")
 			.cssBtngrpCallback = function() {
 				that.objReferenced = this.attr("data");
 			};
