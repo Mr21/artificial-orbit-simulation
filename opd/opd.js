@@ -53,7 +53,7 @@ opd = {
 					}
 					     if (angleDiff >  Math.PI) angleDiff -= Math.PI * 2;
 					else if (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
-					this.refAngle += angleDiff * .05;
+					this.refAngle += angleDiff * fTime * 5;
 					     if (this.refAngle >  Math.PI) this.refAngle -= Math.PI * 2;
 					else if (this.refAngle < -Math.PI) this.refAngle += Math.PI * 2;
 
