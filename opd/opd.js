@@ -40,7 +40,7 @@ opd = {
 							this.refY += (this.ship.y - this.refY) * fTime * 5;
 						break;
 						case "earth":
-							angleDiff = 0 - this.refAngle;
+							angleDiff = this.earth.angle - this.refAngle;
 							this.refX += (-this.refX) * fTime * 5;
 							this.refY += (-this.refY) * fTime * 5;
 						break;
