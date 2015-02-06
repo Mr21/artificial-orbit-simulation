@@ -41,11 +41,15 @@ opd = {
 						break;
 						case "earth":
 							angleDiff = this.earth.angle - this.refAngle;
-							this.refX += (-this.refX) * fTime * 5;
-							this.refY += (-this.refY) * fTime * 5;
+							this.refX += (0 - this.refX) * fTime * 5;
+							this.refY += (0 - this.refY) * fTime * 5;
+						break;
+						case "universe":
+							angleDiff = 0 - this.refAngle;
+							this.refX += (0 - this.refX) * fTime * 5;
+							this.refY += (0 - this.refY) * fTime * 5;
 						break;
 					}
-
 					     if (angleDiff >  Math.PI) angleDiff -= Math.PI * 2;
 					else if (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
 					this.refAngle += angleDiff * .05;
