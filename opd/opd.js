@@ -14,12 +14,13 @@ opd = {
 		this.refX = 0;
 		this.refY = 0;
 		this.refAngle = 0;
-		var jq_refA = $(".referencial a", cnv.container);
-
-		cnv.container.querySelector(".referencial .css-btngrp")
-			.cssBtngrpCallback = function() {
+		cssReset.callback(
+			cnv.container.querySelector(".referencial .css-btngrp"),
+			function() {
 				that.objReferenced = this.attr("data");
-			};
+				return false;
+			}
+		);
 	},
 	render: function() {
 		var	ctx = this.ctx,
