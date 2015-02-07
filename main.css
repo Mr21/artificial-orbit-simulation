@@ -10,32 +10,43 @@ body {
 	}
 	.canvasloth-hud-below {
 		}
-		.canvasloth-hud-below .console {
-			position: absolute;
-			overflow: hidden;
-			width: 200px;
-			left: 0;
-			top: 0;
-			bottom: 0;
-			border-right: 1px dashed rgba(255,255,255,.5);
-			padding: .2em .3em;
-			color: rgba(200,200,200,.8);
-			background: rgba(0,0,0,.92);
-			}
-			.canvasloth-hud-below .console b {
-				color: rgba(200,200,200);
-				}
+
+	/* about */
 	.canvasloth-hud-above .about,
-	.canvasloth-hud-above .referencial {
+	.canvasloth-hud-above .about .page {
 		position: absolute;
-		right: 10px;
+		width: 100%;
+		height: 100%;
 		}
-		.canvasloth-hud-above .fa {
-			font-size: 24px;
+		.canvasloth-hud-above .about .page {
+			-webkit-transition: all .2s ease;
+			visibility: hidden;
+			opacity: 0;
+			background: rgba(0,0,0,.9);
 			}
-	.canvasloth-hud-above .about {
-		top: 10px;
-		}
+			.canvasloth-hud-above .about.show .page {
+				visibility: visible;
+				opacity: 1;
+				}
+
+		/* buttons */
+		.canvasloth-hud-above .about > a,
+		.canvasloth-hud-above .referencial {
+			position: absolute;
+			right: 10px;
+			}
+			.canvasloth-hud-above .fa {
+				font-size: 24px;
+				}
+		.canvasloth-hud-above .about > a {
+			top: 10px;
+			width: 20px;
+			}
+		.canvasloth-hud-above .about      .btnHide { display: none; }
+		.canvasloth-hud-above .about.show .btnHide { display: block; }
+		.canvasloth-hud-above .about.show .btnShow { display: none; }
+
+	/* referencials */
 	.canvasloth-hud-above .referencial {
 		bottom: 10px;
 		}

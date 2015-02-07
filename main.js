@@ -4,7 +4,7 @@ $(function() {
 	new Canvasloth({
 		container: document.querySelector('.canvasloth'),
 		context: '2d',
-		autoFocus: true,
+		// autoFocus: true,
 		fps: 60,
 		thisApp: opd,
 		ready: opd.init,

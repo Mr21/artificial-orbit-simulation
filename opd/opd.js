@@ -10,6 +10,11 @@ opd = {
 		this.earth.init(cnv, ctx);
 		this.ship.init(cnv, ctx);
 
+		// about
+		var jq_about = $(".about", cnv.container);
+		$(".btnShow", jq_about).click(function() { jq_about.addClass("show"); return false; });
+		$(".btnHide", jq_about).click(function() { jq_about.removeClass("show"); return false; });
+
 		// referencial
 		this.refX = 0;
 		this.refY = 0;
