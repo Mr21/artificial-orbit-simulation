@@ -25,15 +25,21 @@ body {
 			.canvasloth-hud-below .console b {
 				color: rgba(200,200,200);
 				}
+	.canvasloth-hud-above .about,
 	.canvasloth-hud-above .referencial {
 		position: absolute;
 		right: 10px;
+		}
+		.canvasloth-hud-above .fa {
+			font-size: 24px;
+			}
+	.canvasloth-hud-above .about {
+		top: 10px;
+		}
+	.canvasloth-hud-above .referencial {
 		bottom: 10px;
 		}
 		.canvasloth-hud-above .referencial div {
 			opacity: .5;
 			margin-bottom: .5em;
-			}
-		.canvasloth-hud-above .referencial .fa {
-			font-size: 24px;
 			}
