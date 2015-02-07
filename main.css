@@ -31,6 +31,11 @@ body {
 			font-size: 14px;
 			line-height: 2em;
 			}
+			.canvasloth-hud-above .about img {
+				float: right;
+				width: 100px;
+				border-radius: 2px;
+				}
 			.canvasloth-hud-above .about h2 {
 				margin: 0;
 				}
