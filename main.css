@@ -29,8 +29,7 @@ body {
 			opacity: 1;
 			}
 		.canvasloth-hud-above .about .content {
-			padding: 40px;
-			padding-right: 70px;
+			padding: 40px 70px 0 40px;
 			font-size: 14px;
 			line-height: 2em;
 			}
