@@ -22,7 +22,6 @@ opd.ship = {
 			)
 			.vertical()
 			.looping(true)
-			.loopAt(9)
 			.nbFrames(10)
 			.duration(.5);
 
@@ -132,15 +131,16 @@ opd.ship = {
 
 		if (landedBefore !== this.landed) {
 			if (this.landed) {
-				this.anSolarPanel.stop();
+				this.anSolarPanel.loopAt(0);
 				this.angleEarth = opd.earth.angle;
 				this.dx =
 				this.dy = 0;
 			} else {
-				this.anSolarPanel.play();
+				this.anSolarPanel.loopAt(9);
 				this.dx += opd.earth.rotationSpeed * 100 * -vx90;
 				this.dy += opd.earth.rotationSpeed * 100 * -vy90;
 			}
+			this.anSolarPanel.reverse().play();
 		}
 
 		// gravity
