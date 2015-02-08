@@ -22,6 +22,8 @@ opd.earth = {
 			ctx.rotate(this.angle);
 				this.spEarth.draw(0, 0);
 		ctx.restore();
+	},
+	drawOpacity: function(ctx) {
 		// atmosphere
 		ctx.lineWidth = this.radius * this.atmosphereSize;
 		ctx.strokeStyle = "#fff";

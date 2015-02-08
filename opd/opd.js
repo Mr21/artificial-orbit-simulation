@@ -69,6 +69,7 @@ opd = {
 							this.space.draw();
 							this.earth.draw(ctx, fTime);
 							this.ship.draw(ctx, cnv, fTime);
+							this.earth.drawOpacity(ctx);
 				ctx.restore();
 		ctx.restore();
 	}
