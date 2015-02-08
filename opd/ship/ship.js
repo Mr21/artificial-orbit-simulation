@@ -14,6 +14,18 @@ opd.ship = {
 			.pivotX("center").pivotY("center")
 			.dstSize(this.size);
 
+		this.anSolarPanel =
+			new canvaslothAnim(
+				new canvaslothSprite(ctx, cnv.image('anSolarPanel.png'))
+					.srcSize(56, 28)
+					.pivotX("left").pivotY("center")
+			)
+			.vertical()
+			.looping(true)
+			.loopAt(8)
+			.nbFrames(9)
+			.duration(.5);
+
 		this.anReactors = [];
 		for (var i = 0; i < 4; ++i) {
 			this.anReactors[i] = {
@@ -120,10 +132,12 @@ opd.ship = {
 
 		if (landedBefore !== this.landed) {
 			if (this.landed) {
+				this.anSolarPanel.stop();
 				this.angleEarth = opd.earth.angle;
 				this.dx =
 				this.dy = 0;
 			} else {
+				this.anSolarPanel.play();
 				this.dx += opd.earth.rotationSpeed * 100 * -vx90;
 				this.dy += opd.earth.rotationSpeed * 100 * -vy90;
 			}
@@ -156,6 +170,11 @@ opd.ship = {
 							this.anReactors[3].anim.draw(0, -8, ft);
 						ctx.restore();
 						this.spShip.draw(0, 0);
+						ctx.save();
+							this.anSolarPanel.draw(11, 0, ft);
+							ctx.scale(-1, 1);
+							this.anSolarPanel.draw(11, 0, ft);
+						ctx.restore();
 				ctx.restore();
 				// debug
 				// ctx.beginPath();
