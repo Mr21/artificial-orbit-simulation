@@ -66,7 +66,7 @@ opd = {
 
 					ctx.rotate(-this.refAngle);
 						ctx.translate(-this.refX, -this.refY);
-							this.space.draw();
+							this.space.draw(ctx);
 							this.earth.draw(ctx, fTime);
 							this.ship.draw(ctx, cnv, fTime);
 							this.earth.drawOpacity(ctx);

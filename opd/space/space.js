@@ -4,7 +4,11 @@ opd.space = {
 			.pivotX("center").pivotY("center")
 			.dstSizeNorm(.8, .8);
 	},
-	draw: function() {
-		this.spSpace.draw(0, 0);
+	draw: function(ctx) {
+		ctx.imageSmoothingEnabled =
+		ctx.mozImageSmoothingEnabled = false;
+			this.spSpace.draw(0, 0);
+		ctx.mozImageSmoothingEnabled =
+		ctx.imageSmoothingEnabled = true;
 	}
 };
