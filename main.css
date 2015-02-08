@@ -33,6 +33,7 @@ body {
 			}
 			.canvasloth-hud-above .about img {
 				float: right;
+				margin-left: 1em;
 				width: 100px;
 				border-radius: 2px;
 				}
