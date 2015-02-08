@@ -22,8 +22,8 @@ opd.ship = {
 			)
 			.vertical()
 			.looping(true)
-			.loopAt(8)
-			.nbFrames(9)
+			.loopAt(9)
+			.nbFrames(10)
 			.duration(.5);
 
 		this.anReactors = [];
