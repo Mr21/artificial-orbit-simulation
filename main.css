@@ -33,17 +33,20 @@ body {
 			font-size: 14px;
 			line-height: 2em;
 			}
-			.canvasloth-hud-above .about img {
-				float: right;
-				margin-left: 1em;
-				width: 100px;
-				border-radius: 2px;
+			.canvasloth-hud-above .about .thumbnail {
+				margin-top: 1em;
+				width: 200px;
+				border-radius: 4px;
+				}
+			.canvasloth-hud-above .about p {
+				font-size: 18px;
+				}
+			.canvasloth-hud-above .about p a:hover {
+				text-decoration: none;
+				border-bottom: 1px dotted;
 				}
 			.canvasloth-hud-above .about h2 {
 				margin: 0;
-				}
-			.canvasloth-hud-above .about p {
-				text-indent: 1em;
 				}
 
 		/* buttons */
@@ -52,9 +55,6 @@ body {
 			position: absolute;
 			right: 10px;
 			}
-			.canvasloth-hud-above .fa {
-				text-indent: 0;
-				}
 			.canvasloth-hud-above a .fa {
 				font-size: 24px;
 				}

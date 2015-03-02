@@ -14,8 +14,7 @@ opd = {
 		var jq_about = $(".about", cnv.container);
 		$(".btnHide", cnv.container).click(function() { jq_about.removeClass("show"); return false; });
 		$(".btnShow", cnv.container)
-			.click(function() { jq_about.addClass("show"); return false; })
-			.click();
+			.click(function() { jq_about.addClass("show"); return false; });
 
 		// referencial
 		this.refX = 0;
