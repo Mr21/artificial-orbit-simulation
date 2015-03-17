@@ -22,6 +22,38 @@ opd = {
 			}
 		);
 	},
+	keydown: function(k) {
+		if (!this.cnv.key(k))
+			switch (k) {
+				case 40: this.ship.reactorTopOn(); break;
+				case 37: this.ship.reactorRightOn(); break;
+				case 38: this.ship.reactorBottomOn(); break;
+				case 39: this.ship.reactorLeftOn(); break;
+			}
+	},
+	keyup: function(k) {
+		// if (this.cnv.key(k))
+			switch (k) {
+				case 40: this.ship.reactorTopOff(); break;
+				case 37: this.ship.reactorRightOff(); break;
+				case 38: this.ship.reactorBottomOff(); break;
+				case 39: this.ship.reactorLeftOff(); break;
+			}
+	},
+	joystickHold: function() {
+		lg("hold");
+	},
+	joystickRelease: function() {
+		lg("release");
+	},
+	joystickMove: function(x, y, rx, ry) {
+		     if (y >=  .5) { this.keydown(40); this.keyup(38); }
+		else if (y <= -.5) { this.keydown(38); this.keyup(40); }
+		else               { this.keyup(38);   this.keyup(40); }
+		     if (x >=  .5) { this.keydown(39); this.keyup(37); }
+		else if (x <= -.5) { this.keydown(37); this.keyup(39); }
+		else               { this.keyup(37);   this.keyup(39); }
+	},
 	render: function() {
 		var	ctx = this.ctx,
 			cnv = this.cnv,
