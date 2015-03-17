@@ -1,10 +1,10 @@
 body {
 	margin: 0;
-	width: 680px;
+	min-width: 680px;
 	background: #111;
 	}
 .canvasloth {
-	width: 100%;
+	width: 680px;
 	height: 480px;
 	margin: 20px auto 0;
 	font: 12px sans-serif;
