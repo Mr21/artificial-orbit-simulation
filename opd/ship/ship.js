@@ -94,9 +94,6 @@ opd.ship = {
 		);
 
 		var
-			kSpace = cnv.key(32),
-			kLeft  = cnv.key(37),
-			kRight = cnv.key(39),
 			vx = Math.sin(this.angle),
 			vy = Math.cos(this.angle),
 			vx90 = Math.sin(this.angle - Math.PI / 2),

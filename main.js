@@ -5,8 +5,8 @@ window.onload = function() {
 		autoFocus: true,
 		fps: 60,
 		thisApp: opd,
-		ready: function(cnv, ctx) {
-			opd.init(cnv, ctx);
+		ready: function(o) {
+			opd.init(o.canvasloth, o.ctx);
 			new joystick({
 				element: document.querySelector(".joystick"),
 				move: function(x, y) {
@@ -16,8 +16,8 @@ window.onload = function() {
 		},
 		loop: opd.render,
 		events: {
-			keydown: opd.keydown,
-			keyup:   opd.keyup
+			keydown: function(o) { opd.keydown(o.key); },
+			keyup:   function(o) { opd.keyup(o.key); }
 		}
 	});
 };

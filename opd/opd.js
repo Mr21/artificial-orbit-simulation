@@ -23,22 +23,20 @@ opd = {
 		);
 	},
 	keydown: function(k) {
-		if (!this.cnv.key(k))
-			switch (k) {
-				case 40: this.ship.reactorTopOn(); break;
-				case 37: this.ship.reactorRightOn(); break;
-				case 38: this.ship.reactorBottomOn(); break;
-				case 39: this.ship.reactorLeftOn(); break;
-			}
+		switch (k) {
+			case 40: this.ship.reactorTopOn(); break;
+			case 37: this.ship.reactorRightOn(); break;
+			case 38: this.ship.reactorBottomOn(); break;
+			case 39: this.ship.reactorLeftOn(); break;
+		}
 	},
 	keyup: function(k) {
-		// if (this.cnv.key(k))
-			switch (k) {
-				case 40: this.ship.reactorTopOff(); break;
-				case 37: this.ship.reactorRightOff(); break;
-				case 38: this.ship.reactorBottomOff(); break;
-				case 39: this.ship.reactorLeftOff(); break;
-			}
+		switch (k) {
+			case 40: this.ship.reactorTopOff(); break;
+			case 37: this.ship.reactorRightOff(); break;
+			case 38: this.ship.reactorBottomOff(); break;
+			case 39: this.ship.reactorLeftOff(); break;
+		}
 	},
 	joystickHold: function() {
 		lg("hold");
