@@ -7,8 +7,7 @@ window.onload = function() {
 		thisApp: opd,
 		ready: function(o) {
 			opd.init(o.canvasloth, o.ctx);
-			new joystick({
-				element: document.querySelector(".joystick"),
+			$(".joystick").element().init({
 				move: function(x, y) {
 					opd.joystickMove(x, y);
 				}

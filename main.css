@@ -68,8 +68,7 @@ body {
 		.canvasloth-hud-above .about.show ~ .btnHide { display: block; }
 		.canvasloth-hud-above .about.show ~ .btnShow { display: none; }
 
-	/* joystick */
-	.joystick {
+	.canvasloth .joystick {
 		position: absolute;
 		bottom: 20px;
 		left: 20px;
